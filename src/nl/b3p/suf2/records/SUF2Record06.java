@@ -16,7 +16,7 @@ public class SUF2Record06 extends SUF2Record {
 
     public static final String VELDLENGTE = "tekst veldlengte";
     public static final String TEKST = "tekst";
-    public static final String ANGLE = "angle";
+    
 
     public SUF2Record06(LineNumberReader lineNumberReader, String line) throws SUF2ParseException, IOException {
         super(lineNumberReader, line);
@@ -42,18 +42,10 @@ public class SUF2Record06 extends SUF2Record {
                 // non-text TODO
                 setType(Type.SYMBOL);
             }
+
             hasGeometry = true;
 
-
-            if (properties.containsKey(COORDINATELIST)) {
-                List<SUF2Coordinate> list = (List<SUF2Coordinate>) properties.get(COORDINATELIST);
-                try {
-                    properties.put(ANGLE, SUF2Math.calculateAngle(list));
-
-                } catch (Exception ex) {
-                    throw new SUF2ParseException(lineNumberReader, "Angle calculation failed", ex);
-                }
-            }
+           
 
         } else {
             throw new SUF2ParseException(lineNumberReader, "Line is a record06, but character 6 is not a 'T'");

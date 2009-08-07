@@ -27,6 +27,7 @@ public abstract class SUF2Record {
     public static final String COORDINATELIST = "coordinates";
     public static final String LKI_CLASSIFICATIECODE = "LKI classificatiecode";
     public static final String GEOM_TYPE = "geom_type";
+    public static final String ANGLE = "angle";
 
     public enum Type {
 
@@ -86,7 +87,7 @@ public abstract class SUF2Record {
             // Multi-line key
             SUF2Record record = SUF2RecordFactory.getNextRecord(lineNumberReader, properties);
 
-            // Clone the hasGeometry
+            // Inherit the hasGeometry
             hasGeometry = hasGeometry || record.hasGeometry();
         }
     }
