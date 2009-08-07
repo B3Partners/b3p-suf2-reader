@@ -33,9 +33,11 @@ public class SUF2Record02 extends SUF2Record {
         super(lineNumberReader, line);
     }
 
-    public Map getCurrentProperties() {
-        Map properties = new HashMap();
+    public SUF2Record02(LineNumberReader lineNumberReader, String line, Map properties) throws SUF2ParseException, IOException {
+        super(lineNumberReader, line, properties);
+    }
 
+    public void parseProperties() {
         properties.put(RD, line.part(3, 4));
         properties.put(LKI, line.part(5, 6));
         properties.put(COORD_MILLIMETERS, line.part(7));
@@ -47,7 +49,5 @@ public class SUF2Record02 extends SUF2Record {
         properties.put(VERMENIGVULDIGINGSCONSTANTE_XY, line.part(42));
         properties.put(HEEFT_OPTEL_Z, line.part(52));
         properties.put(VERMENIGVULDIGINGSCONSTANTE_Z, line.part(62));
-
-        return properties;
     }
 }

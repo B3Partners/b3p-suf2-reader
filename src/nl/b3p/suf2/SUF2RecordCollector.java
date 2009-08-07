@@ -49,7 +49,7 @@ public class SUF2RecordCollector implements Iterator<SUF2Record> {
 
     public boolean hasNext() {
         try {
-            record = getNextRecord(lineNumberReader);
+            record = SUF2RecordFactory.getNextRecord(lineNumberReader);
 
             if (record == null) {
                 return false;
@@ -62,31 +62,7 @@ public class SUF2RecordCollector implements Iterator<SUF2Record> {
         return true;
     }
 
-    public static SUF2Record getNextRecord(LineNumberReader lineNumberReader) throws SUF2ParseException, IOException {
-        String line = lineNumberReader.readLine();
-        int recordType = Integer.parseInt(line.substring(0, 2));
-
-        switch (recordType) {
-            case 1:
-                return new SUF2Record01(lineNumberReader, line);
-            case 2:
-                return new SUF2Record02(lineNumberReader, line);
-            case 3:
-                return new SUF2Record03(lineNumberReader, line);
-            case 4:
-                return new SUF2Record04(lineNumberReader, line);
-            case 5:
-                return new SUF2Record05(lineNumberReader, line);
-            case 6:
-                return new SUF2Record06(lineNumberReader, line);
-            case 7:
-                return new SUF2Record07(lineNumberReader, line);
-            case 99:
-                throw new EOFException();
-            default:
-                throw new IOException("Unknown recordnumber " + recordType);
-        }
-    }
+  
 
     public void remove() {
         throw new UnsupportedOperationException("Not supported yet.");

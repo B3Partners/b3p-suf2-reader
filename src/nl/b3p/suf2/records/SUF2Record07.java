@@ -32,8 +32,11 @@ public class SUF2Record07 extends SUF2Record {
         super(lineNumberReader, line);
     }
 
-    public Map getCurrentProperties() throws SUF2ParseException {
-        Map properties = new HashMap();
+    public SUF2Record07(LineNumberReader lineNumberReader, String line, Map properties) throws SUF2ParseException, IOException {
+        super(lineNumberReader, line, properties);
+    }
+
+    public void parseProperties() throws SUF2ParseException {
 
         if (line.charAt(3) == 'N') {
             properties.put(NAAM, line.part(4, 38));
@@ -56,7 +59,5 @@ public class SUF2Record07 extends SUF2Record {
         } else {
             throw new SUF2ParseException(lineNumberReader, "Unknown subrecord character in " + this.getClass().getSimpleName() + "; " + line.charAt(1) + " not supported");
         }
-
-        return properties;
     }
 }

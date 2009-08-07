@@ -4,18 +4,17 @@
  */
 package nl.b3p.suf2.records;
 
-import java.awt.Point;
 import java.io.IOException;
 import java.io.LineNumberReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import nl.b3p.suf2.SUF2Coordinate;
 import nl.b3p.suf2.SUF2ParseException;
-import nl.b3p.suf2.SUF2RecordCollector;
+import nl.b3p.suf2.SUF2RecordFactory;
 import nl.b3p.suf2.SUF2RecordLine;
-
-
 
 /**
  *
@@ -27,7 +26,7 @@ public abstract class SUF2Record {
     protected boolean done;
     protected final int lineNumber;
     protected LineNumberReader lineNumberReader;
-    private Map properties = new HashMap();
+    protected Map properties;
     protected boolean hasGeometry = false;
     // finals
     public static final String RECORDTYPE = "recordtype";
@@ -35,6 +34,10 @@ public abstract class SUF2Record {
     public static final String LKI_CLASSIFICATIECODE = "LKI classificatiecode";
 
     public SUF2Record(LineNumberReader lineNumberReader, String line) throws SUF2ParseException, IOException {
+        this(lineNumberReader, line, new HashMap());
+    }
+
+    public SUF2Record(LineNumberReader lineNumberReader, String line, Map properties) throws SUF2ParseException, IOException {
         if (line.length() != 64) {
             throw new SUF2ParseException(lineNumberReader, "Line length incorrect (!= 64); length: " + line.length());
         }
@@ -42,65 +45,46 @@ public abstract class SUF2Record {
         this.line = new SUF2RecordLine(line);
         this.lineNumberReader = lineNumberReader;
         this.lineNumber = lineNumberReader.getLineNumber();
-
+        this.properties = properties;
+        
         String recordType = getRecordType();
         if (!line.substring(0, 2).equals(recordType)) {
             throw new SUF2ParseException(lineNumberReader, "Incorrect Record class selected for line; Recordclass=" + recordType + " linetype=" + line.substring(0, 2));
         }
 
-        parseProperties();
+        parseRecord();
     }
 
     public Map getProperties() throws SUF2ParseException, IOException {
         return properties;
     }
 
-    private void parseProperties() throws SUF2ParseException, IOException {
-       try{
-        properties.put(RECORDTYPE, Integer.parseInt(line.part(1, 2)));
-        properties.putAll(getCurrentProperties());
+    private void parseRecord() throws SUF2ParseException, IOException {
+        if (properties.containsKey(RECORDTYPE)) {
+            properties.put(RECORDTYPE, properties.get(RECORDTYPE).toString() + "|" + line.part(1, 2));
+        } else {
+            properties.put(RECORDTYPE, line.part(1, 2));
+        }
+
+        parseProperties();
 
         if (line.isMultiLine()) {
             // Multi-line key
-            SUF2Record record = SUF2RecordCollector.getNextRecord(lineNumberReader);
+            SUF2Record record = SUF2RecordFactory.getNextRecord(lineNumberReader, properties);
 
             // Clone the hasGeometry
             hasGeometry = hasGeometry || record.hasGeometry();
-
-            Iterator it = record.getProperties().keySet().iterator();
-            while (it.hasNext()) {
-                Object key = it.next();
-                Object value = record.getProperties().get(key);
-                if (properties.containsKey(key)) {
-                    // Property already exists
-                    if (properties.get(key) instanceof List) {
-                        // Add new properties to current key/value<List>
-                        List list = (List) properties.get(key);
-                        if (value instanceof List) {
-                            // current List + new List
-                            list.addAll((List)value);
-                        } else {
-                            // current List + new Object
-                            list.add(value);
-                        }
-                    }
-                }
-            }
-            properties.putAll(record.getProperties());
         }
-       }catch(Exception ex){
-           int z=0;
-       }
     }
 
-    protected abstract Map getCurrentProperties() throws SUF2ParseException;
+    protected abstract void parseProperties() throws SUF2ParseException;
 
     public boolean hasGeometry() {
         return hasGeometry;
     }
 
-    public List<Point> getCoordinates() throws Exception {
-        return (List)properties.get(COORDINATELIST);
+    public List<SUF2Coordinate> getCoordinates() throws Exception {
+        return (List) properties.get(COORDINATELIST);
     }
 
     public String getRecordType() {
@@ -110,5 +94,9 @@ public abstract class SUF2Record {
 
     public int getLineNumber() {
         return lineNumber;
+    }
+
+    public SUF2RecordLine getLine() {
+        return line;
     }
 }

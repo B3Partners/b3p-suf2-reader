@@ -6,8 +6,10 @@ package nl.b3p.suf2.records;
 
 import java.io.IOException;
 import java.io.LineNumberReader;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import nl.b3p.suf2.SUF2Coordinate;
+import nl.b3p.suf2.SUF2Math;
 import nl.b3p.suf2.SUF2ParseException;
 
 /**
@@ -18,24 +20,51 @@ public class SUF2Record06 extends SUF2Record {
 
     public static final String VELDLENGTE = "tekst veldlengte";
     public static final String TEKST = "tekst";
+    public static final String ANGLE = "angle";
 
     public SUF2Record06(LineNumberReader lineNumberReader, String line) throws SUF2ParseException, IOException {
         super(lineNumberReader, line);
     }
 
-    public Map getCurrentProperties() throws SUF2ParseException {
-        Map properties = new HashMap();
+    public SUF2Record06(LineNumberReader lineNumberReader, String line, Map properties) throws SUF2ParseException, IOException {
+        super(lineNumberReader, line, properties);
+    }
 
+    public void parseProperties() throws SUF2ParseException {
         if (line.charAt(6) == 'T') {
-            properties.put(TEKST, line.part(7, 46));
-            properties.put(VELDLENGTE, line.part(4,5));
+            if (!properties.containsKey(LKI_CLASSIFICATIECODE)) {
+                throw new SUF2ParseException(lineNumberReader, "LKI classificatiecode niet gevonden voor dit object");
+            }
 
-            System.out.println("hier");
+            //String code = properties.get(LKI_CLASSIFICATIECODE).toString();
+
+            if (properties.get(SUF2Record05.TEKST_OF_SYMBOOL).equals("1")) {
+                properties.put(TEKST, line.part(7, 46));
+                properties.put(VELDLENGTE, line.part(4, 5));
+
+                if (properties.containsKey(COORDINATELIST)) {
+
+
+                    List<SUF2Coordinate> list = (List<SUF2Coordinate>) properties.get(COORDINATELIST);
+                    try {
+                        properties.put(ANGLE, SUF2Math.calculateAngle(list));
+           //             properties.put(COORDINATELIST, SUF2Math.getMiddle(list));
+
+
+                    } catch (Exception ex) {
+                        throw new SUF2ParseException(lineNumberReader, "Angle calculation failed", ex);
+                    }
+
+                }
+            } else {
+                // non-text TODO
+
+
+            }
+
 
         } else {
             throw new SUF2ParseException(lineNumberReader, "Line is a record06, but character 6 is not a 'T'");
         }
-
-        return properties;
     }
 }

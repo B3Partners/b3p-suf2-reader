@@ -20,17 +20,12 @@ public class SUF2ParseException extends Exception {
         super();
         this.message = "line " + reader.getLineNumber() + ": " + message;
     }
-/*
-    SUF2ParseException(SUF2Record record, String message) {
-        super();
-        this.message = "entry starting at line " + record.getStartingLineNumber() + ": " + message;
+
+    public SUF2ParseException(LineNumberReader reader, String message, Exception cause) {
+        super(cause);
+        this.message = "entry starting at line " + reader.getLineNumber() + ": " + message;
     }
 
-    SUF2ParseException(SUF2Record record, String message, Exception cause) {
-        super(cause);
-        this.message = "entry starting at line " + record.getStartingLineNumber() + ": " + message;
-    }
-*/
     @Override
     public String getMessage() {
         return message;

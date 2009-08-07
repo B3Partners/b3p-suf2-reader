@@ -28,14 +28,14 @@ public class SUF2Record01 extends SUF2Record {
         super(lineNumberReader, line);
     }
 
-    public Map getCurrentProperties() {
-        Map properties = new HashMap();
+    public SUF2Record01(LineNumberReader lineNumberReader, String line, Map properties) throws SUF2ParseException, IOException {
+        super(lineNumberReader, line, properties);
+    }
 
+    public void parseProperties() {
         properties.put(BESTANDSIDENTIFICATIE, line.part(3, 14));
         properties.put(VOLLEDIG_OF_MUTATIE, line.part(15));
         properties.put(DATUM_HERZIENING, line.part(16, 21));
         properties.put(DATUM_ACTUALITEIT, line.part(22, 27));
-
-        return properties;
     }
 }
