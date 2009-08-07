@@ -2,10 +2,7 @@ package nl.b3p.suf2.records;
 
 import java.io.IOException;
 import java.io.LineNumberReader;
-import java.util.List;
 import java.util.Map;
-import nl.b3p.suf2.SUF2Coordinate;
-import nl.b3p.suf2.SUF2Math;
 import nl.b3p.suf2.SUF2ParseException;
 
 /**
