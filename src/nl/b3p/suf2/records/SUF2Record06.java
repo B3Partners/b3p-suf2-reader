@@ -36,10 +36,14 @@ public class SUF2Record06 extends SUF2Record {
                 properties.put(TEKST, line.part(7, 46));
                 properties.put(VELDLENGTE, line.part(4, 5));
 
+                setType(Type.TEXT);
 
             } else {
                 // non-text TODO
+                setType(Type.SYMBOL);
             }
+            hasGeometry = true;
+
 
             if (properties.containsKey(COORDINATELIST)) {
                 List<SUF2Coordinate> list = (List<SUF2Coordinate>) properties.get(COORDINATELIST);

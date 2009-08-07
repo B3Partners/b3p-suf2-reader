@@ -26,6 +26,26 @@ public abstract class SUF2Record {
     public static final String RECORDTYPE = "recordtype";
     public static final String COORDINATELIST = "coordinates";
     public static final String LKI_CLASSIFICATIECODE = "LKI classificatiecode";
+    public static final String GEOM_TYPE = "geom_type";
+
+    public enum Type {
+
+        UNDEFINED(null),
+        TEXT("tekst"),
+        SYMBOL("symbool"),
+        LINE("lijn"),
+        POINT("point"),
+        ARC("boog");
+        private final String text;
+
+        private Type(String text) {
+            this.text = text;
+        }
+
+        public String getDescription() {
+            return text;
+        }
+    }
 
     public SUF2Record(LineNumberReader lineNumberReader, String line) throws SUF2ParseException, IOException {
         this(lineNumberReader, line, new HashMap());
@@ -40,7 +60,7 @@ public abstract class SUF2Record {
         this.lineNumberReader = lineNumberReader;
         this.lineNumber = lineNumberReader.getLineNumber();
         this.properties = properties;
-        
+
         String recordType = getRecordType();
         if (!line.substring(0, 2).equals(recordType)) {
             throw new SUF2ParseException(lineNumberReader, "Incorrect Record class selected for line; Recordclass=" + recordType + " linetype=" + line.substring(0, 2));
@@ -94,7 +114,20 @@ public abstract class SUF2Record {
         return line;
     }
 
-    public String toString(){
+    @Override
+    public String toString() {
         return line.toString();
+    }
+
+    public Type getType() {
+        if (properties.containsKey(GEOM_TYPE)) {
+            return (Type) properties.get(GEOM_TYPE);
+        } else {
+            return Type.UNDEFINED;
+        }
+    }
+
+    protected void setType(Type type) {
+        properties.put(GEOM_TYPE, type);
     }
 }

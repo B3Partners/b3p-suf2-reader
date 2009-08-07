@@ -55,7 +55,9 @@ public class SUF2Record05 extends SUF2Record {
 
         coordinates.add(new SUF2Coordinate(x / 1000, y / 1000));
         properties.put(COORDINATELIST, coordinates);
-        hasGeometry = true;
+        //hasGeometry = true;
+
+        setType(Type.LINE);
 
         line.setShift(52);
         properties.put(LKI_CLASSIFICATIECODE, line.part(2, 4));
