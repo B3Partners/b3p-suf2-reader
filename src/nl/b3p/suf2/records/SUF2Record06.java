@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nl.b3p.suf2.records;
 
 import java.io.IOException;
@@ -14,7 +10,7 @@ import nl.b3p.suf2.SUF2ParseException;
 
 /**
  *
- * @author Gertjan
+ * @author Gertjan Al, B3Partners
  */
 public class SUF2Record06 extends SUF2Record {
 
@@ -36,32 +32,24 @@ public class SUF2Record06 extends SUF2Record {
                 throw new SUF2ParseException(lineNumberReader, "LKI classificatiecode niet gevonden voor dit object");
             }
 
-            //String code = properties.get(LKI_CLASSIFICATIECODE).toString();
-
             if (properties.get(SUF2Record05.TEKST_OF_SYMBOOL).equals("1")) {
                 properties.put(TEKST, line.part(7, 46));
                 properties.put(VELDLENGTE, line.part(4, 5));
 
-                if (properties.containsKey(COORDINATELIST)) {
 
-
-                    List<SUF2Coordinate> list = (List<SUF2Coordinate>) properties.get(COORDINATELIST);
-                    try {
-                        properties.put(ANGLE, SUF2Math.calculateAngle(list));
-           //             properties.put(COORDINATELIST, SUF2Math.getMiddle(list));
-
-
-                    } catch (Exception ex) {
-                        throw new SUF2ParseException(lineNumberReader, "Angle calculation failed", ex);
-                    }
-
-                }
             } else {
                 // non-text TODO
-
-
             }
 
+            if (properties.containsKey(COORDINATELIST)) {
+                List<SUF2Coordinate> list = (List<SUF2Coordinate>) properties.get(COORDINATELIST);
+                try {
+                    properties.put(ANGLE, SUF2Math.calculateAngle(list));
+
+                } catch (Exception ex) {
+                    throw new SUF2ParseException(lineNumberReader, "Angle calculation failed", ex);
+                }
+            }
 
         } else {
             throw new SUF2ParseException(lineNumberReader, "Line is a record06, but character 6 is not a 'T'");

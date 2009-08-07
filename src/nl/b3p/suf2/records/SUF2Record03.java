@@ -1,21 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nl.b3p.suf2.records;
 
 import java.io.IOException;
 import java.io.LineNumberReader;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import nl.b3p.suf2.SUF2ParseException;
 import nl.b3p.suf2.SUF2ValueFinder;
 
 /**
  *
- * @author Gertjan
+ * @author Gertjan Al, B3Partners
  */
 public class SUF2Record03 extends SUF2Record {
 

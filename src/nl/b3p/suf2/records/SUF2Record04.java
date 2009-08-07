@@ -1,13 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nl.b3p.suf2.records;
 
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import nl.b3p.suf2.SUF2Coordinate;
@@ -16,7 +11,7 @@ import nl.b3p.suf2.SUF2ValueFinder;
 
 /**
  *
- * @author Gertjan
+ * @author Gertjan Al, B3Partners
  */
 public class SUF2Record04 extends SUF2Record {
 
@@ -75,8 +70,8 @@ public class SUF2Record04 extends SUF2Record {
                 if (line.charAt(1) == 'Y') {
                     String y = line.part(2, 10);
                     SUF2Coordinate coordinate = new SUF2Coordinate(
-                            Integer.parseInt(x),
-                            Integer.parseInt(y));
+                            ((double) Integer.parseInt(x)) / 1000,
+                            ((double) Integer.parseInt(y)) / 1000);
 
                     if (tag != null) {
                         coordinate.setTag(tag);

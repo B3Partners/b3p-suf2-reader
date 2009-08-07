@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nl.b3p.suf2;
 
 import java.io.EOFException;
@@ -20,7 +16,7 @@ import nl.b3p.suf2.records.SUF2Record07;
 
 /**
  *
- * @author Gertjan
+ * @author Gertjan Al, B3Partners
  */
 public class SUF2RecordFactory {
 

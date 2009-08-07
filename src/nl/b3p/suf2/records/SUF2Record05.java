@@ -1,13 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nl.b3p.suf2.records;
 
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +29,7 @@ public class SUF2Record05 extends SUF2Record {
     }
 
     public void parseProperties() throws SUF2ParseException {
-        int x, y;
+        double x, y;
         line.setShift(2);
 
         properties.put(TEXT_ALIGN, line.part(2));
@@ -50,7 +45,7 @@ public class SUF2Record05 extends SUF2Record {
         line.setShift(22);
         y = Integer.parseInt(line.part(2, 10));
 
-        coordinates.add(new SUF2Coordinate(x, y));
+        coordinates.add(new SUF2Coordinate(x / 1000, y / 1000));
 
         line.setShift(32);
         x = Integer.parseInt(line.part(2, 10));
@@ -58,7 +53,7 @@ public class SUF2Record05 extends SUF2Record {
         line.setShift(42);
         y = Integer.parseInt(line.part(2, 10));
 
-        coordinates.add(new SUF2Coordinate(x, y));
+        coordinates.add(new SUF2Coordinate(x / 1000, y / 1000));
         properties.put(COORDINATELIST, coordinates);
         hasGeometry = true;
 

@@ -1,14 +1,8 @@
 package nl.b3p.suf2;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
 /**
  *
- * @author Gertjan
+ * @author Gertjan Al, B3Partners
  */
 public class SUF2RecordLine {
 
@@ -27,7 +21,7 @@ public class SUF2RecordLine {
         return line.substring(start - 1 + shift, start + shift);
     }
 
-    public boolean isMultiLine(){
+    public boolean isMultiLine() {
         return line.endsWith("00");
     }
 
@@ -54,7 +48,6 @@ public class SUF2RecordLine {
     public void shift(int shift) {
         this.shift += shift;
     }
-
 
     public void resetShift() {
         shift = 0;

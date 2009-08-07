@@ -1,18 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nl.b3p.suf2;
 
 /**
  *
- * @author Gertjan
+ * @author Gertjan Al, B3Partners
  */
 public class SUF2Coordinate {
 
     public double x;
     public double y;
-    private Tag tag;
+    private Tag tag = null;
 
     public enum Tag {
 

@@ -1,14 +1,8 @@
-/*
- * $Id: SUF2ParseException.java 8672 2008-07-17 16:37:57Z Matthijs $
- */
-
 package nl.b3p.suf2;
 
 import java.io.LineNumberReader;
 
 /**
- * Exception thrown while parsing a SUF2 file, adds line number in front of
- * specified message.
  *
  * @author Gertjan Al, B3Partners
  */

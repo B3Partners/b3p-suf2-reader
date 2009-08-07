@@ -1,14 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nl.b3p.suf2.records;
 
 import java.io.IOException;
 import java.io.LineNumberReader;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import nl.b3p.suf2.SUF2Coordinate;
@@ -18,7 +12,7 @@ import nl.b3p.suf2.SUF2RecordLine;
 
 /**
  *
- * @author Gertjan
+ * @author Gertjan Al, B3Partners
  */
 public abstract class SUF2Record {
 
@@ -98,5 +92,9 @@ public abstract class SUF2Record {
 
     public SUF2RecordLine getLine() {
         return line;
+    }
+
+    public String toString(){
+        return line.toString();
     }
 }
