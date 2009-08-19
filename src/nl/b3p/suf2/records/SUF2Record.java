@@ -33,10 +33,11 @@ public abstract class SUF2Record {
 
         UNDEFINED(null),
         TEXT("tekst"),
-        SYMBOL("symbool"),
+        ARC("arc"),
         LINE("lijn"),
-        POINT("point"),
-        ARC("boog");
+       // POINT("point"),
+        PERCEEL("perceel"),
+        SYMBOL("symbool");
         private final String text;
 
         private Type(String text) {

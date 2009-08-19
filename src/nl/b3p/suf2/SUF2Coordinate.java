@@ -1,5 +1,7 @@
 package nl.b3p.suf2;
 
+import java.awt.geom.Point2D;
+
 /**
  *
  * @author Gertjan Al, B3Partners
@@ -53,6 +55,7 @@ public class SUF2Coordinate {
         this.tag = tag;
     }
 
+    @Override
     public String toString() {
         return "Coordinaat(" + x + ", " + y + ")" + (tag == null ? "" : " tag:" + tag.toString() + " (" + tag.getDescription() + ")");
     }
@@ -63,5 +66,9 @@ public class SUF2Coordinate {
 
     public double getY() {
         return y;
+    }
+
+    public Point2D.Double toPoint2D() {
+        return new Point2D.Double(x, y);
     }
 }

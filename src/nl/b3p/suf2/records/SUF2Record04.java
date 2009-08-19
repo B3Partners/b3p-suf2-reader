@@ -58,6 +58,7 @@ public class SUF2Record04 extends SUF2Record {
                         break;
                     case 4:
                         tag = SUF2Coordinate.Tag.I4;
+                        setType(Type.ARC);
                         break;
                     default:
                         throw new SUF2ParseException(lineNumberReader, "Unknown Coordinate tag " + tagNum);
@@ -96,6 +97,9 @@ public class SUF2Record04 extends SUF2Record {
 
         if (coordinates.size() != 0) {
             properties.put(COORDINATELIST, coordinates);
+            if(getType() == Type.UNDEFINED){
+                setType(Type.LINE);
+            }
             hasGeometry = true;
         }
     }
