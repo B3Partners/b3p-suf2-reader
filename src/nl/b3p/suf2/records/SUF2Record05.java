@@ -54,10 +54,14 @@ public class SUF2Record05 extends SUF2Record {
         y = Integer.parseInt(line.part(2, 10));
 
         coordinates.add(new SUF2Coordinate(x / 1000, y / 1000));
+
+        if(coordinates.get(0).equals(coordinates.get(1))){
+            int z=0;
+        }
+
         properties.put(COORDINATELIST, coordinates);
-        
+
         hasGeometry = true;
-        
         setType(Type.SYMBOL);
 
         line.setShift(52);

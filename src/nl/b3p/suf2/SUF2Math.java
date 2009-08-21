@@ -15,6 +15,7 @@ public class SUF2Math {
      * @param coordinates List with two coordinates
      * @return Angle in degrees
      */
+    /*
     public static double angle(List<SUF2Coordinate> coordinates) throws Exception {
         if (coordinates.size() == 2) {
             SUF2Coordinate c1 = coordinates.get(0);
@@ -25,6 +26,7 @@ public class SUF2Math {
             throw new Exception("Number of coordinates is not equal to 2 (size = " + coordinates.size() + "); unable to calculate angle between points");
         }
     }
+     * */
 
     /**
      * Calculate the angle of a line (two coordinates)
@@ -36,7 +38,7 @@ public class SUF2Math {
 
         double dx = c2.x - c1.x;
         double dy = c2.y - c1.y;
-        double angle = 0.0;
+        double angle;
 
         if (dx == 0.0) {
             if (dy == 0.0) {
