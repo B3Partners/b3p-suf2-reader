@@ -2,7 +2,7 @@ package nl.b3p.suf2.records;
 
 import java.io.IOException;
 import java.io.LineNumberReader;
-import java.util.Map;
+import nl.b3p.suf2.SUF2Map;
 import nl.b3p.suf2.SUF2ParseException;
 
 /**
@@ -27,7 +27,7 @@ public class SUF2Record07 extends SUF2Record {
         super(lineNumberReader, line);
     }
 
-    public SUF2Record07(LineNumberReader lineNumberReader, String line, Map properties) throws SUF2ParseException, IOException {
+    public SUF2Record07(LineNumberReader lineNumberReader, String line, SUF2Map properties) throws SUF2ParseException, IOException {
         super(lineNumberReader, line, properties);
     }
 

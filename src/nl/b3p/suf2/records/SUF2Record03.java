@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.HashMap;
 import java.util.Map;
+import nl.b3p.suf2.SUF2Map;
 import nl.b3p.suf2.SUF2ParseException;
 import nl.b3p.suf2.SUF2ValueFinder;
 
@@ -33,7 +34,7 @@ public class SUF2Record03 extends SUF2Record {
         super(lineNumberReader, line);
     }
 
-    public SUF2Record03(LineNumberReader lineNumberReader, String line, Map properties) throws SUF2ParseException, IOException {
+    public SUF2Record03(LineNumberReader lineNumberReader, String line, SUF2Map properties) throws SUF2ParseException, IOException {
         super(lineNumberReader, line, properties);
     }
 
@@ -42,37 +43,8 @@ public class SUF2Record03 extends SUF2Record {
 
         if (line.charAt(1) == 'M') {
             properties.put(LKI_CLASSIFICATIECODE, line.part(2, 4));
-
-            while (line.getShift() < 52) {
-                line.shift(10);
-                if (line.charAt(1) == 'G') {
-
-                    Map<Integer, String> values_stringsoort = new HashMap();
-                    values_stringsoort.put(1, "(knik)punt");
-                    values_stringsoort.put(12, "string (2 punten of meer)");
-                    values_stringsoort.put(13, "cirkelboog voor drie punten");
-                    SUF2ValueFinder.addValue(line.part(2, 3), G_STRINGSOORT, properties, values_stringsoort);
-
-                    String[] values_zichtbaarheid = {"normaal / niet bekend", "boven en onder maaiveld (Z-niveau)", "onzichtbaar vanuit de lucht", "vaag of slecht interpreteerbaar"};
-                    SUF2ValueFinder.addValue(line.part(4), G_ZICHTBAARHEID, properties, values_zichtbaarheid);
-
-                    String[] values_inwinning = {"niet bekend", "terrestrische meting (T)", "fotogrammetrische meting (F)", "digistalisering kaart (D)", "scanning kaart (S)", "kaartverbetering (K)"};
-                    SUF2ValueFinder.addValue(line.part(6), G_INWINNING, properties, values_inwinning);
-
-                    String[] values_status = {null, "nieuw object", null, null, "te verwijderen object"};
-                    SUF2ValueFinder.addValue(line.part(7), G_STATUS_VAN_OBJECT, properties, values_status);
-
-
-                } else if (line.charAt(1) == 'D') {
-                    properties.put(D_OPNAMEDATUM, line.part(2, 10));
-
-                } else if (line.charAt(1) == 'B') {
-                    properties.put(B_BRONVERMELDING, line.part(2, 6));
-
-                    String[] values = {"niet bekend", "kad. steen", "ijzeren buis", "draineerbuis", "bout", "spijker", "piket"};
-                    SUF2ValueFinder.addValue(line.part(8), B_WIJZE_VERZEKERING, properties, values);
-                }
-            }
+            line.shift(10);
+            parseSub();
 
         } else if (line.charAt(1) == 'L') {
             properties.put(GEMEENTECODE_LINKS, line.part(2, 6));
@@ -84,7 +56,39 @@ public class SUF2Record03 extends SUF2Record {
             properties.put(INDEXNUMMER_PERCEELNUMMER, line.part(7, 10));
 
         } else {
-            throw new SUF2ParseException(lineNumberReader, "Unknown subrecord character in " + this.getClass().getSimpleName() + "; " + line.charAt(1) + " not supported");
+            parseSub();
+        }
+    }
+
+    private void parseSub() {
+        while (line.getShift() < 62) {
+            if (line.charAt(1) == 'G') {
+                Map<Integer, String> values_stringsoort = new HashMap();
+                values_stringsoort.put(1, "(knik)punt");
+                values_stringsoort.put(12, "string (2 punten of meer)");
+                values_stringsoort.put(13, "cirkelboog voor drie punten");
+                SUF2ValueFinder.addValue(line.part(2, 3), G_STRINGSOORT, properties, values_stringsoort);
+
+                String[] values_zichtbaarheid = {"normaal / niet bekend", "boven en onder maaiveld (Z-niveau)", "onzichtbaar vanuit de lucht", "vaag of slecht interpreteerbaar"};
+                SUF2ValueFinder.addValue(line.part(4), G_ZICHTBAARHEID, properties, values_zichtbaarheid);
+
+                String[] values_inwinning = {"niet bekend", "terrestrische meting (T)", "fotogrammetrische meting (F)", "digistalisering kaart (D)", "scanning kaart (S)", "kaartverbetering (K)"};
+                SUF2ValueFinder.addValue(line.part(6), G_INWINNING, properties, values_inwinning);
+
+                String[] values_status = {null, "nieuw object", null, null, "te verwijderen object"};
+                SUF2ValueFinder.addValue(line.part(7), G_STATUS_VAN_OBJECT, properties, values_status);
+
+
+            } else if (line.charAt(1) == 'D') {
+                properties.put(D_OPNAMEDATUM, line.part(2, 10));
+
+            } else if (line.charAt(1) == 'B') {
+                properties.put(B_BRONVERMELDING, line.part(2, 6));
+
+                String[] values = {"niet bekend", "kad. steen", "ijzeren buis", "draineerbuis", "bout", "spijker", "piket"};
+                SUF2ValueFinder.addValue(line.part(8), B_WIJZE_VERZEKERING, properties, values);
+            }
+            line.shift(10);
         }
     }
 }

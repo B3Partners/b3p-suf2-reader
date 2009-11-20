@@ -2,10 +2,10 @@ package nl.b3p.suf2.records;
 
 import java.io.IOException;
 import java.io.LineNumberReader;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import nl.b3p.suf2.SUF2Coordinate;
+import nl.b3p.suf2.SUF2Map;
 import nl.b3p.suf2.SUF2ParseException;
 import nl.b3p.suf2.SUF2RecordFactory;
 import nl.b3p.suf2.SUF2RecordLine;
@@ -20,7 +20,7 @@ public abstract class SUF2Record {
     protected boolean done;
     protected final int lineNumber;
     protected LineNumberReader lineNumberReader;
-    protected Map properties;
+    protected SUF2Map properties;
     protected boolean hasGeometry = false;
     // finals
     public static final String RECORDTYPE = "recordtype";
@@ -29,31 +29,44 @@ public abstract class SUF2Record {
     public static final String GEOM_TYPE = "geom_type";
     public static final String ANGLE = "angle";
 
+
+    /*
+     * Ranking: Define which GeomType is preferred above others.
+     * For instance a polygon is better than a line
+     * (The first record tought it would become a line, but later on it appears te be a polygon)
+     */
     public enum Type {
 
-        UNDEFINED(null),
-        TEXT("tekst"),
-        ARC("arc"),
-        LINE("lijn"),
-       // POINT("point"),
-        PERCEEL("perceel"),
-        SYMBOL("symbool");
+        UNDEFINED(null, -1),
+        TEXT("tekst", 5),
+        ARC("arc", 30),
+        LINE("lijn", 20),
+        POLYGON("vlak", 40),
+        // Point has multiple types
+        PERCEEL("perceel", 15),
+        SYMBOL("symbool", 10);
         private final String text;
+        private final int rank;
 
-        private Type(String text) {
+        private Type(String text, int rank) {
             this.text = text;
+            this.rank = rank;
         }
 
         public String getDescription() {
             return text;
         }
+
+        public int getRank() {
+            return rank;
+        }
     }
 
     public SUF2Record(LineNumberReader lineNumberReader, String line) throws SUF2ParseException, IOException {
-        this(lineNumberReader, line, new HashMap());
+        this(lineNumberReader, line, new SUF2Map());
     }
 
-    public SUF2Record(LineNumberReader lineNumberReader, String line, Map properties) throws SUF2ParseException, IOException {
+    public SUF2Record(LineNumberReader lineNumberReader, String line, SUF2Map properties) throws SUF2ParseException, IOException {
         if (line.length() != 64) {
             throw new SUF2ParseException(lineNumberReader, "Line length incorrect (!= 64); length: " + line.length());
         }
@@ -76,11 +89,7 @@ public abstract class SUF2Record {
     }
 
     private void parseRecord() throws SUF2ParseException, IOException {
-        if (properties.containsKey(RECORDTYPE)) {
-            properties.put(RECORDTYPE, properties.get(RECORDTYPE).toString() + "|" + line.part(1, 2));
-        } else {
-            properties.put(RECORDTYPE, line.part(1, 2));
-        }
+        properties.put(RECORDTYPE, line.part(1, 2));
 
         parseProperties();
 

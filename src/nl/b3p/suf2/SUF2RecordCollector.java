@@ -34,17 +34,13 @@ public class SUF2RecordCollector implements Iterator<SUF2Record> {
 
     public boolean hasNext() {
         try {
-            record = SUF2RecordFactory.getNextRecord(lineNumberReader);
-
-            if (record == null) {
-                return false;
-            }
+            return ((record = SUF2RecordFactory.getNextRecord(lineNumberReader)) != null);
         } catch (EOFException ex) {
             return false;
         } catch (Exception ex) {
-            int z = 0; // TODO
+            log.error("SUF2 parse error", ex);
+            return false;
         }
-        return true;
     }
 
     public void remove() {

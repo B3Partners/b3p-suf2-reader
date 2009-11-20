@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import nl.b3p.suf2.SUF2Coordinate;
+import nl.b3p.suf2.SUF2Map;
 import nl.b3p.suf2.SUF2ParseException;
 import nl.b3p.suf2.SUF2ValueFinder;
 
@@ -26,23 +26,15 @@ public class SUF2Record04 extends SUF2Record {
         super(lineNumberReader, line);
     }
 
-    public SUF2Record04(LineNumberReader lineNumberReader, String line, Map properties) throws SUF2ParseException, IOException {
+    public SUF2Record04(LineNumberReader lineNumberReader, String line, SUF2Map properties) throws SUF2ParseException, IOException {
         super(lineNumberReader, line, properties);
     }
 
     public void parseProperties() throws SUF2ParseException {
         line.setShift(2);
 
-        List<SUF2Coordinate> coordinates;
-        if (properties.containsKey(COORDINATELIST)) {
-            coordinates = (List<SUF2Coordinate>) properties.get(COORDINATELIST);
-        } else {
-            coordinates = new ArrayList();
-        }
-
-
+        List<SUF2Coordinate> coordinates = new ArrayList<SUF2Coordinate>();
         SUF2Coordinate.Tag tag = null;
-
 
         while (line.getShift() < 52) {
 
@@ -97,9 +89,7 @@ public class SUF2Record04 extends SUF2Record {
 
         if (coordinates.size() != 0) {
             properties.put(COORDINATELIST, coordinates);
-            if(getType() == Type.UNDEFINED){
-                setType(Type.LINE);
-            }
+            setType(Type.LINE);
             hasGeometry = true;
         }
     }

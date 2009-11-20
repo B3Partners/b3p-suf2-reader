@@ -71,4 +71,23 @@ public class SUF2Coordinate {
     public Point2D.Double toPoint2D() {
         return new Point2D.Double(x, y);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof SUF2Coordinate) {
+            SUF2Coordinate compare = (SUF2Coordinate) o;
+            return (getX() == compare.getX() && getY() == compare.getY());
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + (int) (Double.doubleToLongBits(this.x) ^ (Double.doubleToLongBits(this.x) >>> 32));
+        hash = 59 * hash + (int) (Double.doubleToLongBits(this.y) ^ (Double.doubleToLongBits(this.y) >>> 32));
+        hash = 59 * hash + this.tag.hashCode();
+        return hash;
+    }
 }
