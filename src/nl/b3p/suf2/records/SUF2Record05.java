@@ -49,16 +49,21 @@ public class SUF2Record05 extends SUF2Record {
             coordinates.add(new SUF2Coordinate(x / 1000, y / 1000));
 
             line.setShift(32);
-            x = Integer.parseInt(line.part(2, 10));
+            if (!line.part(2, 10).trim().equals("")) {
+                x = Integer.parseInt(line.part(2, 10));
 
-            line.setShift(42);
-            y = Integer.parseInt(line.part(2, 10));
+                line.setShift(42);
+                y = Integer.parseInt(line.part(2, 10));
 
-            coordinates.add(new SUF2Coordinate(x / 1000, y / 1000));
+                coordinates.add(new SUF2Coordinate(x / 1000, y / 1000));
 
-            setType(Type.SYMBOL);
-            line.setShift(52);
-            properties.put(LKI_CLASSIFICATIECODE, line.part(2, 4));
+                setType(Type.SYMBOL);
+                line.setShift(52);
+                properties.put(LKI_CLASSIFICATIECODE, line.part(2, 4));
+            } else {
+                int z = 0;
+            }
+
         } else if (line.part(1).equals("X")) {
             x = Integer.parseInt(line.part(2, 10));
 
