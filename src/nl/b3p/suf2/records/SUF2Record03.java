@@ -14,9 +14,10 @@ import nl.b3p.suf2.SUF2ValueFinder;
  */
 public class SUF2Record03 extends SUF2Record {
 
-    public static final String GEMEENTECODE_LINKS = "gemeentecode links";
-    public static final String SECTIELETTER_LINKS = "sectieletter links";
-    public static final String PERCEELNUMMER_LINKS = "perceelnummer links";
+   /* public static final String ORIENTATIEGEMEENTECODE = "orientatie gemeentecode";
+    public static final String ORIENTATIESECTIELETTER = "orientatie sectieletter";
+    public static final String ORIENTATIEPERCEELNUMMER = "orientatie perceelnummer";*/
+    public static final String ORIENTATIETOVPERCEEL = "orientatie tov perceel";
     public static final String INDEXLETTER_PERCEELNUMMER = "indexletter van perceelnummer";
     public static final String INDEXNUMMER_PERCEELNUMMER = "indexnummer van perceelnummer";
     // G
@@ -40,29 +41,20 @@ public class SUF2Record03 extends SUF2Record {
 
     public void parseProperties() throws SUF2ParseException {
         line.setShift(2);
-
-        if (line.charAt(1) == 'M') {
-            properties.put(LKI_CLASSIFICATIECODE, line.part(2, 4));
-            line.shift(10);
-            parseSub();
-
-        } else if (line.charAt(1) == 'L') {
-            properties.put(GEMEENTECODE_LINKS, line.part(2, 6));
-            properties.put(SECTIELETTER_LINKS, line.part(7, 8));
-            properties.put(INDEXLETTER_PERCEELNUMMER, line.part(10));
-
-        } else if (line.charAt(1) == 'V') {
-            properties.put(PERCEELNUMMER_LINKS, line.part(2, 6));
-            properties.put(INDEXNUMMER_PERCEELNUMMER, line.part(7, 10));
-
-        } else {
-            parseSub();
-        }
-    }
-
-    private void parseSub() {
         while (line.getShift() < 62) {
-            if (line.charAt(1) == 'G') {
+            if (line.charAt(1) == 'M') {
+                properties.put(LKI_CLASSIFICATIECODE, line.part(2, 4));
+            }else if (line.charAt(1) == 'L' || line.charAt(1) == 'R') {
+                properties.put(ORIENTATIETOVPERCEEL, line.part(1));
+                properties.put(SUF2Record06.GEMEENTECODE, line.part(2, 6));
+                properties.put(SUF2Record06.SECTIE, line.part(7, 8));
+                properties.put(INDEXLETTER_PERCEELNUMMER, line.part(10));
+
+            } else if (line.charAt(1) == 'V') {
+                properties.put(SUF2Record06.PERCEELNUMMER, line.part(2, 6));
+                properties.put(INDEXNUMMER_PERCEELNUMMER, line.part(7, 10));
+
+            }else if(line.charAt(1) == 'G') {
                 Map<Integer, String> values_stringsoort = new HashMap();
                 values_stringsoort.put(1, "(knik)punt");
                 values_stringsoort.put(12, "string (2 punten of meer)");
@@ -90,6 +82,10 @@ public class SUF2Record03 extends SUF2Record {
             }
             line.shift(10);
         }
+    }
+
+    private void parseSub() {
+        
     }
 }
 

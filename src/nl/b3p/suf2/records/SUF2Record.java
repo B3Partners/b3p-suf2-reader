@@ -28,6 +28,7 @@ public abstract class SUF2Record {
     public static final String LKI_CLASSIFICATIECODE = "LKI classificatiecode";
     public static final String GEOM_TYPE = "geom_type";
     public static final String ANGLE = "angle";
+    public static final String ID= "suf_id";
 
 
     /*
