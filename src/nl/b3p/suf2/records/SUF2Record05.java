@@ -29,6 +29,10 @@ public class SUF2Record05 extends SUF2Record {
     }
 
     public void parseProperties() throws SUF2ParseException {
+        if (lineNumberReader.getLineNumber() >= 212667) {
+            int z = 0;
+        }
+        
         double x, y;
         line.setShift(2);
 
@@ -60,8 +64,6 @@ public class SUF2Record05 extends SUF2Record {
                 setType(Type.SYMBOL);
                 line.setShift(52);
                 properties.put(LKI_CLASSIFICATIECODE, line.part(2, 4));
-            } else {
-                int z = 0;
             }
 
         } else if (line.part(1).equals("X")) {

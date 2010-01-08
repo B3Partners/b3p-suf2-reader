@@ -4,6 +4,7 @@
  */
 package nl.b3p.suf2;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,8 +27,21 @@ public class SUF2Map extends HashMap {
     public Object put(Object key, Object value) {
         if (key.equals(SUF2Record.COORDINATELIST)) {
             List<SUF2Coordinate> coordinates = (List) value;
+
             if (!containsKey(SUF2Record.COORDINATELIST)) {
-                return super.put(SUF2Record.COORDINATELIST, coordinates);
+                List<SUF2Coordinate> coordinateList = new ArrayList<SUF2Coordinate>();
+
+                for (int i = 0; i < coordinates.size(); i++) {
+                    if (coordinateList.size() == 0) {
+                        coordinateList.add(coordinates.get(i));
+                    } else if (!coordinates.get(i).equals(coordinateList.get(coordinateList.size() - 1))) {
+                        coordinateList.add(coordinates.get(i));
+                    }else{
+                        int z=0;
+                    }
+                }
+
+                return super.put(SUF2Record.COORDINATELIST, coordinateList);
 
             } else {
                 // Add coordinates to current list
@@ -46,7 +60,16 @@ public class SUF2Map extends HashMap {
                         put(SUF2Record.GEOM_TYPE, Type.POLYGON);
                     }
                 }
-
+/*
+                for (int i = 0; i < coordinates.size(); i++) {
+                    if (coordinateList.size() == 0) {
+                        coordinateList.add(coordinates.get(i));
+                    } else if (!coordinates.get(i).equals(coordinateList.get(coordinateList.size() - 1))) {
+                        coordinateList.add(coordinates.get(i));
+                    }else{
+                        int cry = 0;
+                    }
+                }*/
                 coordinateList.addAll(coordinates);
                 return super.put(SUF2Record.COORDINATELIST, coordinateList);
             }

@@ -14,9 +14,6 @@ import nl.b3p.suf2.SUF2ValueFinder;
  */
 public class SUF2Record03 extends SUF2Record {
 
-   /* public static final String ORIENTATIEGEMEENTECODE = "orientatie gemeentecode";
-    public static final String ORIENTATIESECTIELETTER = "orientatie sectieletter";
-    public static final String ORIENTATIEPERCEELNUMMER = "orientatie perceelnummer";*/
     public static final String ORIENTATIETOVPERCEEL = "orientatie tov perceel";
     public static final String INDEXLETTER_PERCEELNUMMER = "indexletter van perceelnummer";
     public static final String INDEXNUMMER_PERCEELNUMMER = "indexnummer van perceelnummer";
@@ -82,10 +79,6 @@ public class SUF2Record03 extends SUF2Record {
             }
             line.shift(10);
         }
-    }
-
-    private void parseSub() {
-        
     }
 }
 
