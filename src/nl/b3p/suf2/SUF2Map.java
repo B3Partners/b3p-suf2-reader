@@ -36,8 +36,6 @@ public class SUF2Map extends HashMap {
                         coordinateList.add(coordinates.get(i));
                     } else if (!coordinates.get(i).equals(coordinateList.get(coordinateList.size() - 1))) {
                         coordinateList.add(coordinates.get(i));
-                    }else{
-                        int z=0;
                     }
                 }
 
@@ -60,7 +58,7 @@ public class SUF2Map extends HashMap {
                         put(SUF2Record.GEOM_TYPE, Type.POLYGON);
                     }
                 }
-/*
+
                 for (int i = 0; i < coordinates.size(); i++) {
                     if (coordinateList.size() == 0) {
                         coordinateList.add(coordinates.get(i));
@@ -69,8 +67,8 @@ public class SUF2Map extends HashMap {
                     }else{
                         int cry = 0;
                     }
-                }*/
-                coordinateList.addAll(coordinates);
+                }
+                //coordinateList.addAll(coordinates);
                 return super.put(SUF2Record.COORDINATELIST, coordinateList);
             }
 
