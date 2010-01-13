@@ -25,7 +25,7 @@ public abstract class SUF2Record {
     // finals
     public static final String RECORDTYPE = "recordtype";
     public static final String COORDINATELIST = "coordinates";
-    public static final String LKI_CLASSIFICATIECODE = "LKI_classificatiecode";
+    public static final String LKI_CLASSIFICATIECODE = "LKI classificatiecode";
     public static final String GEOM_TYPE = "geom_type";
     public static final String ANGLE = "angle";
     public static final String ID= "suf_id";
