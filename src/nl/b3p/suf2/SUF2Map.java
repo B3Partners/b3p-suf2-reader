@@ -64,7 +64,7 @@ public class SUF2Map extends HashMap {
                         coordinateList.add(coordinates.get(i));
                     } else if (!coordinates.get(i).equals(coordinateList.get(coordinateList.size() - 1))) {
                         coordinateList.add(coordinates.get(i));
-                    }else{
+                    } else {
                         int cry = 0;
                     }
                 }
@@ -82,8 +82,10 @@ public class SUF2Map extends HashMap {
             }
 
         } else if (doWrite(key, value)) {
+            if (value instanceof String) {
+                value = ((String) value).replaceAll("\\\\", "\\\\\\\\");
+            }
             return super.put(key, value);
-
         } else {
             return key;
         }
