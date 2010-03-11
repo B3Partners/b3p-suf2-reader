@@ -15,16 +15,16 @@ import nl.b3p.suf2.SUF2ValueFinder;
 public class SUF2Record03 extends SUF2Record {
 
     //L,R,V
-    public static final String GEMEENTECODEPERCEELLINKS="gemeentecode perceel links";
-    public static final String SECTIEPERCEELLINKS="sectie perceel links";
-    public static final String INDEXLETTERPERCEELLINKS="indexletter perceel links";
-    public static final String PERCEELNUMMERLINKS="perceelnummer perceel links";
-    public static final String INDEXNUMMERLINKS= "indexnummer perceel links";
-    public static final String GEMEENTECODEPERCEELRECHTS="gemeentecode perceel rechts";
-    public static final String SECTIEPERCEELRECHTS="sectie perceel rechts";
-    public static final String INDEXLETTERPERCEELRECHTS="indexletter perceel rechts";
-    public static final String PERCEELNUMMERRECHTS="perceelnummer perceel rechts";
-    public static final String INDEXNUMMERRECHTS= "indexnummer perceel rechts";
+    public static final String GEMEENTECODEPERCEELLINKS="gemeentecode_perceel_links";
+    public static final String SECTIEPERCEELLINKS="sectie_perceel_links";
+    public static final String INDEXLETTERPERCEELLINKS="indexletter_perceel_links";
+    public static final String PERCEELNUMMERLINKS="perceelnummer_perceel_links";
+    public static final String INDEXNUMMERLINKS= "indexnummer_perceel_links";
+    public static final String GEMEENTECODEPERCEELRECHTS="gemeentecode_perceel_rechts";
+    public static final String SECTIEPERCEELRECHTS="sectie_perceel_rechts";
+    public static final String INDEXLETTERPERCEELRECHTS="indexletter_perceel_rechts";
+    public static final String PERCEELNUMMERRECHTS="perceelnummer_perceel_rechts";
+    public static final String INDEXNUMMERRECHTS= "indexnummer_perceel_rechts";
     // G
     public static final String G_STRINGSOORT = "stringsoort van het grafisch element";
     public static final String G_ZICHTBAARHEID = "zichtbaarheid van object ivm tekeninstructies";
