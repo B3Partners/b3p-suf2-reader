@@ -14,9 +14,17 @@ import nl.b3p.suf2.SUF2ValueFinder;
  */
 public class SUF2Record03 extends SUF2Record {
 
-    public static final String ORIENTATIETOVPERCEEL = "orientatie tov perceel";
-    public static final String INDEXLETTER_PERCEELNUMMER = "indexletter van perceelnummer";
-    public static final String INDEXNUMMER_PERCEELNUMMER = "indexnummer van perceelnummer";
+    //L,R,V
+    public static final String GEMEENTECODEPERCEELLINKS="gemeentecode perceel links";
+    public static final String SECTIEPERCEELLINKS="sectie perceel links";
+    public static final String INDEXLETTERPERCEELLINKS="indexletter perceel links";
+    public static final String PERCEELNUMMERLINKS="perceelnummer perceel links";
+    public static final String INDEXNUMMERLINKS= "indexnummer perceel links";
+    public static final String GEMEENTECODEPERCEELRECHTS="gemeentecode perceel rechts";
+    public static final String SECTIEPERCEELRECHTS="sectie perceel rechts";
+    public static final String INDEXLETTERPERCEELRECHTS="indexletter perceel rechts";
+    public static final String PERCEELNUMMERRECHTS="perceelnummer perceel rechts";
+    public static final String INDEXNUMMERRECHTS= "indexnummer perceel rechts";
     // G
     public static final String G_STRINGSOORT = "stringsoort van het grafisch element";
     public static final String G_ZICHTBAARHEID = "zichtbaarheid van object ivm tekeninstructies";
@@ -41,16 +49,30 @@ public class SUF2Record03 extends SUF2Record {
         while (line.getShift() < 62) {
             if (line.charAt(1) == 'M') {
                 properties.put(LKI_CLASSIFICATIECODE, line.part(2, 4));
-            }else if (line.charAt(1) == 'L' || line.charAt(1) == 'R') {
-                properties.put(ORIENTATIETOVPERCEEL, line.part(1));
-                properties.put(SUF2Record06.GEMEENTECODE, line.part(2, 6));
-                properties.put(SUF2Record06.SECTIE, line.part(7, 8));
-                properties.put(INDEXLETTER_PERCEELNUMMER, line.part(10));
-
-            } else if (line.charAt(1) == 'V') {
-                properties.put(SUF2Record06.PERCEELNUMMER, line.part(2, 6));
-                properties.put(INDEXNUMMER_PERCEELNUMMER, line.part(7, 10));
-
+            }else if (line.charAt(1) == 'L') {
+                //properties.put(ORIENTATIETOVPERCEEL, line.part(1));
+                properties.put(GEMEENTECODEPERCEELLINKS, line.part(2, 6));
+                properties.put(SECTIEPERCEELLINKS, line.part(7, 8));
+                properties.put(INDEXLETTERPERCEELLINKS, line.part(10));
+                line.shift(10);
+                if (line.charAt(1) == 'V') {
+                    properties.put(PERCEELNUMMERLINKS, line.part(2, 6));
+                    properties.put(INDEXNUMMERLINKS, line.part(7, 10));
+                }else{
+                    throw new SUF2ParseException(lineNumberReader,"Ongeldig volg-subrecord. Na een L subrecord dient een V subrecord te komen.");
+                }
+            }else if(line.charAt(1) == 'R'){
+                properties.put(GEMEENTECODEPERCEELRECHTS, line.part(2, 6));
+                properties.put(SECTIEPERCEELRECHTS, line.part(7, 8));
+                properties.put(INDEXLETTERPERCEELRECHTS, line.part(10));
+                //get the V subrecord.
+                line.shift(10);
+                if (line.charAt(1) == 'V') {
+                    properties.put(PERCEELNUMMERRECHTS, line.part(2, 6));
+                    properties.put(INDEXNUMMERRECHTS, line.part(7, 10));
+                }else{
+                    throw new SUF2ParseException(lineNumberReader,"Ongeldig volg-subrecord. Na een R subrecord dient een V subrecord te komen.");
+                }
             }else if(line.charAt(1) == 'G') {
                 Map<Integer, String> values_stringsoort = new HashMap();
                 values_stringsoort.put(1, "(knik)punt");
