@@ -39,7 +39,8 @@ public class SUF2RecordCollector implements Iterator<SUF2Record> {
             return false;
         } catch (Exception ex) {
             log.error("SUF2 parse error", ex);
-            return false;
+            //exception, try the next line.
+            return this.hasNext();
         }
     }
 
