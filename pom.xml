@@ -33,7 +33,7 @@
         <connection>scm:git:git@github.com:B3Partners/b3p-suf2-reader.git</connection>
         <developerConnection>scm:git:git@github.com:B3Partners/b3p-suf2-reader.git</developerConnection>
         <url>https://github.com/B3Partners/b3p-suf2-reader</url>
-      <tag>b3p-suf2-reader-4.2.1</tag>
+      <tag>b3p-suf2-reader-${project.version}</tag>
     </scm>
     <distributionManagement>
         <repository>
