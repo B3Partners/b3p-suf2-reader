@@ -83,7 +83,7 @@ public class SUF2Math {
      * Calculate the distance between two coordinates
      * @param c1 First coordinate
      * @param c2 Second coordinate
-     * @return
+     * @return distance in coordinate units
      */
     public static double distance(SUF2Coordinate c1, SUF2Coordinate c2) {
         return Point2D.distance(c1.x, c1.y, c2.x, c2.y);
