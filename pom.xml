@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>nl.b3p</groupId>
     <artifactId>b3p-suf2-reader</artifactId>
-    <version>5.0.2-SNAPSHOT</version>
+    <version>5.0.2</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceVersion>1.8</project.build.sourceVersion>
@@ -45,7 +45,7 @@
         <connection>scm:git:git@github.com:B3Partners/b3p-suf2-reader.git</connection>
         <developerConnection>scm:git:git@github.com:B3Partners/b3p-suf2-reader.git</developerConnection>
         <url>https://github.com/B3Partners/b3p-suf2-reader</url>
-        <tag>HEAD</tag>
+        <tag>b3p-suf2-reader-5.0.2</tag>
     </scm>
     <distributionManagement>
         <repository>
