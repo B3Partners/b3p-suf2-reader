@@ -38,7 +38,7 @@ timestamps {
 
             stage('OWASP Dependency Check') {
                 echo "Uitvoeren OWASP dependency check"
-                sh "mvn org.owasp:dependency-check-maven:check"
+                sh "mvn org.owasp:dependency-check-maven:check -Dformats=ALL"
                 dependencyCheckPublisher failedNewCritical: 1, unstableNewHigh: 1, unstableNewLow: 1, unstableNewMedium: 1
             }
         }
